@@ -115,8 +115,8 @@ def depth(ast:AST) -> int:
     max_depth = 0
     for node in ast:
         if isinstance(node, Loop):
-                max_d = max(max_d, 1 + depth(node.body))
-    return max_d
+                max_depth = max(max_depth, 1 + depth(node.body))
+    return max_depth
     
 def count_instructions(ast:AST) -> dict[str, int]:
     """

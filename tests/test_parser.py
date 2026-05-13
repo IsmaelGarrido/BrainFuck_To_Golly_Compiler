@@ -54,12 +54,12 @@ def test_instructions_after_loop():
 def test_add_program():
     """Full Program: 2+3 -> ++>+++>[->+<]"""
     assert parse(tokenize('++>+++>[->+<]')) == [
-        I('+'), I('+'), I('>'), I('+'), I('+'), I('<'), L(I('-'), I('>'), I('+'), I('<')) 
+        I('+'), I('+'), I('>'), I('+'), I('+'), I('+'), I('>'), L(I('-'), I('>'), I('+'), I('<')) 
     ]
 
 def test_set_zero_program():
     """Full Program: [-]"""
-    assert parse(tokenize("[-]")) == [L[I('-')]]
+    assert parse(tokenize("[-]")) == [L(I('-'))]
 
 def test_program_regressive_count():
     """Full program: +++++[-]"""
@@ -96,7 +96,7 @@ def test_error_close_without_open():
 
 def test_error_close_without_open_with_instructions():
     """']' without '[' after instructions raises ParseError."""
-    with pytest.raises[ParseError]:
+    with pytest.raises(ParseError):
         parse(['+', '+', ']'])
 
 def test_error_open_without_close():
@@ -143,7 +143,7 @@ def test_depth_three_loop():
 
 def test_depth_parallel_loops():
     """Two loops with same depth."""
-    assert depth(parse(tokenize('++->'))) == 1
+    assert depth(parse(tokenize('[+][-]'))) == 1
 
 def test_count_simple_instructions():
     """Correctly counts simple instructions."""
