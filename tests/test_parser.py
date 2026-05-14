@@ -52,9 +52,9 @@ def test_instructions_after_loop():
     assert parse(tokenize("[-]++")) == [L(I('-')), I('+'), I('+')]
 
 def test_add_program():
-    """Full Program: 2+3 -> ++>+++>[->+<]"""
-    assert parse(tokenize('++>+++>[->+<]')) == [
-        I('+'), I('+'), I('>'), I('+'), I('+'), I('+'), I('>'), L(I('-'), I('>'), I('+'), I('<')) 
+    """Full Program: 2+3 -> ++>+++<[->+<]"""
+    assert parse(tokenize('++>+++<[->+<]')) == [
+        I('+'), I('+'), I('>'), I('+'), I('+'), I('+'), I('<'), L(I('-'), I('>'), I('+'), I('<')) 
     ]
 
 def test_set_zero_program():
@@ -69,7 +69,7 @@ def test_program_regressive_count():
 
 def test_simple_nested_loop():
     """Loop inside loop - 1 level of nesting"""
-    assert parse(tokenize("[+][-]"))
+    assert parse(tokenize("[+][-]")) == [L(I('+')), L(I('-'))]
 
 def test_deep_nested_loop():
     """Three levels of nesting"""
