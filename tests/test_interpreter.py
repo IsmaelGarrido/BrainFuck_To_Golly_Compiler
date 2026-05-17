@@ -74,7 +74,7 @@ def test_loop_does_not_execute_if_cell_zero():
     assert r.tape[0] == 0
 
 def test_loop_sets_cell_to_zero():
-    assert tape('+++++[-]')[0]
+    assert tape('+++++[-]')[0] == 0
 
 def test_empty_loop():
     r = run('[]')

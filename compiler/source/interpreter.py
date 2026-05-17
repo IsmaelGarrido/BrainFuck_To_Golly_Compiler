@@ -102,6 +102,9 @@ def interpret(ast: AST,
                     case '+':
                         tape[ptr] = (tape[ptr] + 1) % 256
 
+                    case '-':
+                        tape[ptr] = (tape[ptr] - 1) % 256
+
                     case '.':
                         output.append(tape[ptr])
                     
