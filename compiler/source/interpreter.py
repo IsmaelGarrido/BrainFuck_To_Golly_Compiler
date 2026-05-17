@@ -86,20 +86,66 @@ def interpret(ast: AST,
             if isinstance(node, Instruction):
                 nonlocal ptr
                 match node.op:
-                        case '>':
-                            ptr += 1
+                    case '>':
+                        ptr += 1
 
-                            if ptr >= len(tape):
-                                tape.extend([0] * tape_size)
-                        
-                        case '<':
-                            if ptr == 0:
-                                raise TapeUnderflowError(
-                                    "Pointer tried moving left from tape position 0"
-                                )
-                            ptr -= 1
-                        
-                        case '+':
-                            tape[ptr] = (tape[ptr] + 1) % 256
+                        if ptr >= len(tape):
+                            tape.extend([0] * tape_size)
+                    
+                    case '<':
+                        if ptr == 0:
+                            raise TapeUnderflowError(
+                                "Pointer tried moving left from tape position 0"
+                            )
+                        ptr -= 1
+                    
+                    case '+':
+                        tape[ptr] = (tape[ptr] + 1) % 256
 
-                        case ''
+                    case '.':
+                        output.append(tape[ptr])
+                    
+                    case ',':
+                        raise InputNotSupportedError(
+                            "Instruction ',' (input) not supported in v1"
+                            "Limit documented."
+                        )
+            elif isinstance(node, Loop):
+                while tape[ptr] != 0:
+                    steps[0] += 1
+                    if steps[0] > max_steps:
+                        raise InterpreterError(
+                            f"Steps limit of {max_steps:,} surpased."
+                            f"Program may contain infinite loop."
+                        )
+                    run(node.body)
+
+    run(ast)
+
+    trimmed_tape = tape[:max(ptr + 1, tape_size)]
+
+    return InterpreterResult(
+        tape = trimmed_tape,
+        output = output,
+        pointer = ptr
+    )
+
+def run(source: str,
+        tape_size: int = 30000,
+        max_steps: int = 10000000) -> InterpreterResult:
+    """
+    Executes BF source code directly (lexer + parser + interpreter).
+    
+    Convenient function for test use and terminal.
+
+    Parameters:
+        source:     BF source code as string
+        tape_size:  initial tape size
+        max_steps:  steps limit
+
+    Returns:
+        InterpreterResult with tape, output and pointer position.
+    """
+    from lexer import tokenize
+    from parser import parse
+    return interpret(parse(tokenize(source)), tape_size, max_steps)
