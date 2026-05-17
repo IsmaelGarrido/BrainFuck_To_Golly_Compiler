@@ -5,7 +5,6 @@ Unit Test for parser module
 """
 
 import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'compiler', 'source'))
 
 import pytest 
 from lexer import tokenize, tokenize_file, LexerError, VALID_TOKENS
