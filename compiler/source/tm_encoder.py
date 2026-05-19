@@ -72,7 +72,7 @@ class TMProgram:
         
         return None
     
-    def is__deterministic(self) -> bool:
+    def is_deterministic(self) -> bool:
         """
         Verifies if TM is deterministic:
         at most one transtiion per (state, symbol) pair.
@@ -89,7 +89,7 @@ class TMProgram:
     
     def output_transitions(self) -> list[Transition]:
         """Returns all transitions flagged as output (from '.' instructions)."""
-        return [t for t in self.transitios if t.is_output]
+        return [t for t in self.transitions if t.is_output]
     
     @property
     def Q(self) -> set[int]:
@@ -229,9 +229,14 @@ def encode(ast: AST) -> TMProgram:
                                     ))
                                 current = next_s
                             
+                            case ',': 
+                                raise EncoderError(
+                                    "Instruction ',' (input) is not supported in v1."
+                                )
+
                             case _:
                                 raise EncoderError(
-                                        f"Unrecognised instructions: '{node.op}"
+                                    f"Unrecognised instructions: '{node.op}"
                                 )
                         
                 elif isinstance(node, Loop):
@@ -252,7 +257,7 @@ def encode(ast: AST) -> TMProgram:
                     if node.body:
                         body_last = encode_nodes(node.body, body_entry)
                     else:
-                        body__last = body_entry
+                        body_last = body_entry
 
                     for sym in ALPHABET:
                         transitions.append(Transition(
