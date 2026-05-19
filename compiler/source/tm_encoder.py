@@ -277,7 +277,7 @@ def encode(ast: AST) -> TMProgram:
     return TMProgram(
         transitions= transitions,
         initial_state= initial,
-        accept_state= accept;
+        accept_state= accept,
         num_states= counter[0],
         alphabet_size= ALPHABET_SIZE
     )
