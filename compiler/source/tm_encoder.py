@@ -244,16 +244,16 @@ def encode(ast: AST) -> TMProgram:
                     body_entry = new_state()
                     loop_exit = new_state()
 
-                transitions.append(Transition(
-                    state=loop_entry, read=0,
-                    new_state=loop_exit, write=0, direction='N'
-                ))
-                for sym in ALPHABET[1:]:
                     transitions.append(Transition(
-                        state=loop_entry, read=sym,
-                        new_state=body_entry, write=sym, direction='N'
+                        state=loop_entry, read=0,
+                        new_state=loop_exit, write=0, direction='N'
                     ))
-                    
+                    for sym in ALPHABET[1:]:
+                        transitions.append(Transition(
+                            state=loop_entry, read=sym,
+                            new_state=body_entry, write=sym, direction='N'
+                        ))
+                        
                     if node.body:
                         body_last = encode_nodes(node.body, body_entry)
                     else:
