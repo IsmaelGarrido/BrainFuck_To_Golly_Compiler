@@ -16,9 +16,6 @@ from tm_encoder import(
 def enc(source: str) -> TMProgram:
     return encode_source(source)
 
-def transitions_for_state(tm: TMProgram, state: int) -> list[Transition]:
-    return tm.transition_from(state)
-
 def test_alphabet_size():
     """Full BF alphabet has 256 symbols."""
     assert ALPHABET_SIZE == 256
@@ -96,7 +93,7 @@ def test_move_right_direction():
         assert t.direction == 'R'
 
 def test_move_left_direction():
-    """'>' generates L transitions."""
+    """'<' generates L transitions."""
     tm = enc('<')
     for t in tm.transitions_from(tm.initial_state):
         assert t.direction == 'L'

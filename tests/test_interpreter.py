@@ -86,7 +86,7 @@ def test_nested_loop():
     assert r.tape[2] == 6
 
 def test_simple_output():
-    r = run('+.)')
+    r = run('+.')
     assert r.output == [1]
 
 def test_multiple_output():

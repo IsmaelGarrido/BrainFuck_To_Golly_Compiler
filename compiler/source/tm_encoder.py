@@ -33,7 +33,7 @@ class Transition:
     read:       int
     new_state:  int
     write:      int
-    direction:  int
+    direction:  str
     is_output:  bool = False
     
     def __repr__(self):
