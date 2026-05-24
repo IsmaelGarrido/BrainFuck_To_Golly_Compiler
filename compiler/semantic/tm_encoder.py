@@ -7,7 +7,7 @@ Translates BF AST into Turing Machine transition table.
 """
 
 from dataclasses import dataclass, field
-from parser import Instruction, Loop, AST
+from compiler.source_language.parser import Instruction, Loop, AST
 
 ALPHABET_SIZE   = 256
 ALPHABET        = tuple(range(ALPHABET_SIZE))
@@ -291,7 +291,7 @@ def encode_source(source: str) -> TMProgram:
     """
     Encodes BF source code directly (lexer + parser + encode).
     """
-    from lexer import tokenize
-    from parser import parse
+    from compiler.source_language.lexer import tokenize
+    from compiler.source_language.parser import parse
     return encode(parse(tokenize(source)))
 

@@ -10,7 +10,7 @@ and BF program execution.
 """
 
 from dataclasses import dataclass, field
-from parser import Instruction, Loop, AST
+from compiler.source_language.parser import Instruction, Loop, AST
 
 @dataclass
 class InterpreterResult:
@@ -149,6 +149,6 @@ def run(source: str,
     Returns:
         InterpreterResult with tape, output and pointer position.
     """
-    from lexer import tokenize
-    from parser import parse
+    from compiler.source_language.lexer import tokenize
+    from compiler.source_language.parser import parse
     return interpret(parse(tokenize(source)), tape_size, max_steps)
