@@ -10,7 +10,7 @@ This module is responsible for converting the 256-symbol TMProgram created by
 tm_encoder.py to a 8-bit-per-symbol TMProgram.
 """
 
-from compiler.ast.tm_encoder import Transition, TMProgram, ALPHABET_SIZE, ALPHABET
+from compiler.semantic.tm_encoder import Transition, TMProgram, ALPHABET_SIZE, ALPHABET
 
 BITS_PER_SYMBOL = 8
 BINARY_ALPHABET = (0,1)
@@ -171,5 +171,5 @@ def map_source(source: str) -> TMProgram:
     
     Applies lexer + parser + tm_encoder + alphabet_mapper.
     """
-    from compiler.ast.tm_encoder import encode_source
+    from compiler.semantic.tm_encoder import encode_source
     return map_to_binary(encode_source(source))
