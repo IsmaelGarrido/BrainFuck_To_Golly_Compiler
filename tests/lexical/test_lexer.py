@@ -1,11 +1,11 @@
 """
-Brainfuck_To_Golly_Compiler/tests/test_lexer.py
+Brainfuck_To_Golly_Compiler/tests/lexical/test_lexer.py
 -----------------------------------------------
 Unit Test for lexer module
 """
 
 import pytest
-from lexer import tokenize, tokenize_file, LexerError, VALID_TOKENS
+from compiler.lexical.lexer import tokenize, tokenize_file, LexerError, VALID_TOKENS
 
 def test_simple_tokens():
     """Tokens are recognized correctly."""

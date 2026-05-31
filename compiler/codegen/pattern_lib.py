@@ -1,5 +1,5 @@
 """
-compiler/codegen/pattern_lib.py
+BrainFuck_To_Golly_Compiler/compiler/codegen/pattern_lib.py
 ---------------------------------
 Library of GoL primitives used by the GoL generator.
 """
@@ -18,7 +18,7 @@ def _get_tree():
     """
     global _session, _tree
     if _tree is None:
-        _session = lifelib.load_rules("b2s23")
+        _session = lifelib.load_rules("b3s23")
         _tree = _session.lifetree(memory=200)
     return _tree
 
@@ -63,7 +63,7 @@ class PatternDef:
         return p
     
 GLIDER = PatternDef(
-    rle = "bo$2bo3o!",
+    rle = "bo$2bo$3o!",
     period = 4,
     velocity = (1,1),
     safe_margin = 5,

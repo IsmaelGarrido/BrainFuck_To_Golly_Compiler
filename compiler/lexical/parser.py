@@ -1,5 +1,5 @@
 """
-BrainFuck_To_Golly_Compiler/compiler/source/parser.py
+BrainFuck_To_Golly_Compiler/compiler/lexical/parser.py
 ----------------------------------------------------
 Syntactic Analysis
 

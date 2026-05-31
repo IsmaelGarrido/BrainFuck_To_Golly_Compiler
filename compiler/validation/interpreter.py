@@ -1,5 +1,5 @@
 """
-BrainFuck_To_Golly_Compiler/compiler/source/interpreter.py
+BrainFuck_To_Golly_Compiler/compiler/validation/interpreter.py
 ----------------------------------------------------
 Brainfuck reference Interpreter.
 

@@ -1,5 +1,5 @@
 """
-BrainFuck_To_Golly_Compiler/compiler/source/mt_encoder.py
+BrainFuck_To_Golly_Compiler/compiler/semantic/mt_encoder.py
 ----------------------------------------------------
 MT Encoder (intermediate representation).
 
@@ -294,4 +294,3 @@ def encode_source(source: str) -> TMProgram:
     from compiler.lexical.lexer import tokenize
     from compiler.lexical.parser import parse
     return encode(parse(tokenize(source)))
-

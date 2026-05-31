@@ -1,5 +1,5 @@
 """
-BrainFuck_To_Golly_Compiler/compiler/source/lexer.py
+BrainFuck_To_Golly_Compiler/compiler/lexical/lexer.py
 ----------------------------------------------------
 Lexic Analysis.
 

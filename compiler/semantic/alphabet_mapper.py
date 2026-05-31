@@ -1,5 +1,5 @@
 """
-Brainfuck_To_Golly_Compiler/compiler/source/alphabet_mapper.py
+Brainfuck_To_Golly_Compiler/compiler/semantic/alphabet_mapper.py
 -----------------------------------------------
 Second step of phase 4 of the compiler: alphabet reduction
 

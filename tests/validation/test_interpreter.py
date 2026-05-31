@@ -1,5 +1,5 @@
 """
-test/test_interpreter.py
+Brainfuck_To_Golly_Compiler/tests/validation/test_interpreter.py
 ------------------------
 Unit tests of interpreter
 """
@@ -8,7 +8,7 @@ import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "compiler", "source"))
 
 import pytest
-from interpreter import(
+from compiler.validation.interpreter import(
     run, interpret, InterpreterResult,
     InterpreterError, InputNotSupportedError, TapeUnderflowError
 )

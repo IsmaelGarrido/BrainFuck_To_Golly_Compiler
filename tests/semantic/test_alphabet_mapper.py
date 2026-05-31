@@ -1,5 +1,5 @@
 """
-Brainfuck_To_Golly_Compiler/tests/test_alphabet_mapper.py
+Brainfuck_To_Golly_Compiler/tests/semantic/test_alphabet_mapper.py
 -----------------------------------------------
 Unit Test for alphabet mapper module.
 """
@@ -8,11 +8,11 @@ import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'compiler', 'source'))
 
 import pytest
-from alphabet_mapper import(
+from compiler.semantic.alphabet_mapper import(
     symbol_to_bits, bits_to_symbol, map_to_binary, map_source,
     MapperError, BITS_PER_SYMBOL, BINARY_ALPHABET
 )
-from tm_encoder import encode_source, TMProgram as TMProgram
+from compiler.semantic.tm_encoder import encode_source, TMProgram as TMProgram
 
 def binary_tm(source: str) -> TMProgram:
     return map_source(source)

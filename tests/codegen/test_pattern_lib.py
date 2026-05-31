@@ -1,5 +1,5 @@
 """
-tests/codegen/test_pattern_lib.py
+Brainfuck_To_Golly_Compiler/tests/codegen/test_pattern_lib.py
 ----------------------------------
 Unit tests for pattern_lib.py.
 """
@@ -8,11 +8,10 @@ import sys, os
 
 import pytest
 import tempfile
-from pattern_lib import (
+from compiler.codegen.pattern_lib import (
     GLIDER, BLOCK, EATER1, GOSPER_GUN, SNARK, BLINKER, BEEHIVE,
     GLIDER_SE, GLIDER_SW, GLIDER_NE, GLIDER_NW,
-    PRIMITIVES, compose, place, save_rle, glider_position_at,
-    _get_tree
+    PRIMITIVES, compose, place, save_rle, glider_position_at
 )
 
 def test_registry_contains_all_primitives():
@@ -48,7 +47,7 @@ def test_glider_period_4():
 
 def test_glider_displacement_se():
     """SE glider moves +1,+1 per 4 gens."""
-    p = GLIDER.instantiate()
+    p = GLIDER.instantiate(transform = GLIDER_SE)
     p4 = p.advance(4)
     dx = p4.bounding_box[0] - p.bounding_box[0]
     dy = p4.bounding_box[1] - p.bounding_box[1]
@@ -56,7 +55,7 @@ def test_glider_displacement_se():
 
 def test_glider_displacement_sw():
     """SW glider moves -1,+1 per 4 gens."""
-    p = GLIDER.instantiate()
+    p = GLIDER.instantiate(transform = GLIDER_SW)
     p4 = p.advance(4)
     dx = p4.bounding_box[0] - p.bounding_box[0]
     dy = p4.bounding_box[1] - p.bounding_box[1]
@@ -64,15 +63,15 @@ def test_glider_displacement_sw():
 
 def test_glider_displacement_ne():
     """NE glider moves +1, -1 per 4 gens."""
-    p = GLIDER.instantiate()
+    p = GLIDER.instantiate(transform = GLIDER_NE)
     p4 = p.advance(4)
     dx = p4.bounding_box[0] - p.bounding_box[0]
     dy = p4.bounding_box[1] - p.bounding_box[1]
-    assert dx == -1 and dy == -1
+    assert dx == 1 and dy == -1
 
 def test_glider_displacement_nw():
     """NW glider moves -1, -1 per 4 gens."""
-    p = GLIDER.instantiate()
+    p = GLIDER.instantiate(transform = GLIDER_NW)
     p4 = p.advance(4)
     dx = p4.bounding_box[0] - p.bounding_box[0]
     dy = p4.bounding_box[1] - p.bounding_box[1]
@@ -121,7 +120,7 @@ def test_gosper_gun_population():
     assert GOSPER_GUN.instantiate().population == 36
 
 def test_gosper_gun_bounding_box():
-    x, y, h, w = GOSPER_GUN.instantiate().bounding_box
+    x, y, w, h = GOSPER_GUN.instantiate().bounding_box
     assert w == 36 and h == 9
 
 def test_gosper_gun_emits_at_period_30():
@@ -138,10 +137,10 @@ def test_gosper_gun_period():
     assert GOSPER_GUN.period == 30
 
 def test_snark_population():
-    assert GOSPER_GUN.instantiate().population == 22
+    assert SNARK.instantiate().population == 22
 
 def test_snark_bounding_box():
-    w, y, w, h = SNARK.instantiate().bounding_box
+    x, y, w, h = SNARK.instantiate().bounding_box
     assert w == 41 and h == 24
 
 def test_snark_is_still_life():

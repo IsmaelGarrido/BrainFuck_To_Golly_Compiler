@@ -1,5 +1,5 @@
 """
-Brainfuck_To_Golly_Compiler/tests/test_tm_encoder.py
+Brainfuck_To_Golly_Compiler/tests/semantic/test_tm_encoder.py
 -----------------------------------------------
 Unit Test for encoder module
 """
@@ -8,7 +8,7 @@ import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'compiler', 'source'))
 
 import pytest
-from tm_encoder import(
+from compiler.semantic.tm_encoder import(
     encode, encode_source, Transition, TMProgram,
     EncoderError, ALPHABET, ALPHABET_SIZE
 )

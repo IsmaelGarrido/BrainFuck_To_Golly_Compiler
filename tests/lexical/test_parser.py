@@ -1,5 +1,5 @@
 """
-Brainfuck_To_Golly_Compiler/tests/test_parser.py
+Brainfuck_To_Golly_Compiler/tests/lexical/test_parser.py
 -----------------------------------------------
 Unit Test for parser module
 """
@@ -7,8 +7,8 @@ Unit Test for parser module
 import sys, os
 
 import pytest 
-from lexer import tokenize, tokenize_file, LexerError, VALID_TOKENS
-from parser import parse, Instruction, Loop, ParseError, depth, count_instructions
+from compiler.lexical.lexer import tokenize, tokenize_file, LexerError, VALID_TOKENS
+from compiler.lexical.parser import parse, Instruction, Loop, ParseError, depth, count_instructions
 
 def I(op): return Instruction(op)
 def L(*body): return Loop(list(body))
