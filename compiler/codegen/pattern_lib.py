@@ -1,6 +1,6 @@
 """
 BrainFuck_To_Golly_Compiler/compiler/codegen/pattern_lib.py
----------------------------------
+-------------------------------------------------------------
 Library of GoL primitives used by the GoL generator.
 """
 
