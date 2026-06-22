@@ -12,15 +12,6 @@ Pipeline:
     BF source → [lexer] → [parser] → [tm_encoder] → turing rule (Simkin)
                                                   → turing.py (Golly) → GoL
 
-Decisiones de diseño aplicadas (ver DECISIONES_export_simkin.md):
-    A1: mover el puntero a la izquierda del origen es un error (cinta
-        unilateral de Simkin). No hay auto-desplazamiento.
-    B:  '.' se colapsa (la salida es la cinta visible en GoL); no genera
-        transición en la MT exportada.
-    C1: la cinta inicial se dimensiona al alcance del programa (ceros).
-    E1: el export es binario (alphabet_size = 2).
-    F:  un programa sin instrucciones efectivas no genera MT (error). Se
-        comprueba tras tokenizar y colapsar '.'.
 
 Uso programático:
     from compiler_BF_to_GoL import compile_bf
@@ -35,9 +26,8 @@ Uso por línea de comandos:
 import sys
 import os
 
-# El pipeline activo vive en lexical/ y semantic/.
 _HERE = os.path.dirname(os.path.abspath(__file__))
-for _sub in ("lexical", "semantic"):
+for _sub in ("lexical", "semantic", "codegen"):
     _path = os.path.join(_HERE, _sub)
     if _path not in sys.path:
         sys.path.insert(0, _path)
@@ -50,7 +40,6 @@ from tm_encoder import (
     required_tape_length, EncoderError, UnilateralTapeError,
 )
 
-# Alfabeto del pipeline de Simkin (decisión E1).
 SIMKIN_ALPHABET = 2
 
 
@@ -87,7 +76,6 @@ def _effective_ast(source: str):
     except ParseError as e:
         raise CompilerError("sintáctico", str(e))
 
-    # Decisión B: '.' no llega a la MT (la salida es la cinta en GoL).
     return strip_output_nodes(ast)
 
 
@@ -103,19 +91,11 @@ def compile_bf(source: str,
     Parámetros:
         source:     código fuente Brainfuck.
         input_tape: cinta inicial (lista de 0/1). Si None, se dimensiona al
-                    alcance del programa con ceros (decisión C1).
+                    alcance del programa con ceros.
         head_start: posición inicial del cabezal (0 = origen, por defecto).
 
     Devuelve:
         La turing rule (str) en el formato de Simkin.
-
-    Lanza:
-        CompilerError: si el programa no es compilable, indicando la fase:
-            - 'léxico'      : error del lexer (no ocurre en BF, reservado).
-            - 'sintáctico'  : corchetes desequilibrados.
-            - 'vacío'       : sin instrucciones efectivas (decisión F).
-            - 'cinta'       : el puntero cruza el origen (decisión A1).
-            - 'codificación': instrucción no soportada (p. ej. ',').
     """
     # Etapas 1-2 + colapso de '.'.
     ast = _effective_ast(source)
@@ -129,17 +109,14 @@ def compile_bf(source: str,
             "instrucciones para el export a Simkin.)"
         )
 
-    # Decisión A1: rechazar el cruce de origen en la cinta unilateral.
     try:
         check_unilateral_safe(source)
     except UnilateralTapeError as e:
         raise CompilerError("cinta", str(e))
 
-    # Decisión C1: dimensionar la cinta inicial al alcance del programa.
     if input_tape is None:
         input_tape = [0] * required_tape_length(source)
 
-    # Etapa 3: codificar la MT, eliminar movimientos 'N', serializar a Simkin.
     try:
         mt = encode(ast, alphabet_size=SIMKIN_ALPHABET)
         mt = eliminate_stationary(mt)
